@@ -5,16 +5,52 @@ import * as Styled from './Login.style';
 import InputComponent from '../Input/Input.component';
 
 const FormLoginComponent = () => {
+    const users = [
+        {
+            id: 1,
+            email: 'andre@usercep.com',
+            password: '12345678',
+        },
+        {
+            id: 2,
+            email: 'usercep@gmail.com',
+            password: '12345678',
+        },
+        {
+            id: 3,
+            email: 'usuario@usercep.com',
+            password: '12345678',
+        },
+        {
+            id: 4,
+            email: 'andre@teste.com',
+            password: '12345678',
+        },
+    ];
+
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
       } = useForm()
 
     const navigate = useNavigate();
 
     const submitForm = (data) => {
-        console.log(data);
+        const { email, password } = data;
+
+        const user = users.find(u => u.email === email);
+
+        if(!user) {
+            alert('Usuario não cadastrado');
+            reset();
+            return;
+        }
+
+        password === user.password
+            ? redirectToHome()
+            : alert('Ops! Usuário e/ou Senha Invalidos.');
     }
 
     const redirectToHome = () => {
